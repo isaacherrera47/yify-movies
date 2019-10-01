@@ -1,0 +1,38 @@
+<div class="row">
+  <mat-spinner *ngIf="!movies"></mat-spinner>
+  <div class="col-sm-12 col-md-4 col-lg-2 mt-2" *ngFor="let movie of movies">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <mat-card-title>{{movie.title}}</mat-card-title>
+        <mat-card-subtitle>
+          <mat-icon inline="true">calendar_today</mat-icon> {{movie.year}}
+          <button mat-icon-button color="primary" title="Download Torrent" [matMenuTriggerFor]="torrentMenu"><mat-icon>play_for_work</mat-icon></button>
+          <button mat-icon-button color="accent" title="Download Subtitles" [matMenuTriggerFor]="subsMenu"><mat-icon>subtitles</mat-icon></button>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="{{movie.medium_cover_image}}" alt="Photo of movie">
+      <mat-card-content>
+        <p>
+          <mat-icon inline="true">star</mat-icon> {{movie.rating}}
+          <mat-icon inline="true">timelapse</mat-icon> {{movie.runtime}} mins.
+        </p>
+        <mat-chip-list>
+          <mat-chip *ngFor="let genre of movie.genres">{{genre}}</mat-chip>
+        </mat-chip-list>
+      </mat-card-content>
+    </mat-card>
+    <mat-menu #torrentMenu="matMenu">
+      <button mat-menu-item (click)="onTorrentDownloadClick(torrent)" *ngFor="let torrent of movie.torrents" [title]="torrent.size">
+        {{torrent.quality}} - {{torrent.type | uppercase}} (s: {{torrent.seeds}} - p: {{torrent.peers}})
+      </button>
+    </mat-menu>
+    <mat-menu #subsMenu="matMenu">
+      <button mat-menu-item (click)="onSubDownloadClick(movie.imdb_code, 'en')">English</button>
+      <button mat-menu-item (click)="onSubDownloadClick(movie.imdb_code, 'es')">Spanish</button>
+    </mat-menu>
+  </div>
+  <ul>
+  </ul>
+</div>
+
+
