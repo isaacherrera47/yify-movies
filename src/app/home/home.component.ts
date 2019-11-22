@@ -11,12 +11,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   moviesSubscription: any;
   subsSubscription: any;
   movies: Array<Movie>;
+  loadingData = false;
+  searchTerm = '';
+
   constructor(private svcMovies: MoviesService) {
   }
 
   ngOnInit() {
-    this.getMovies();
+    this.getMovies({minimum_rating: 7});
     this.svcMovies.search.subscribe((queryTerm) => {
+      this.searchTerm = queryTerm.trim();
       const params = queryTerm.trim().length > 0 ? {query_term: queryTerm} : {};
       this.getMovies(params);
     });
@@ -30,10 +34,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   getMovies(params = {}) {
+    this.loadingData = true;
+    this.movies = null;
     this.moviesSubscription = this.svcMovies.getMovies(params).subscribe((res: YifyResponse) => {
       if (res.status === 'ok') {
         this.movies = res.data.movies;
       }
+      this.loadingData = false;
     });
   }
 
@@ -49,4 +56,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
   }
 
+  onGenreClick(genre: string) {
+    this.searchTerm = genre;
+    this.getMovies({genre});
+  }
 }

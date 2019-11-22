@@ -1,5 +1,11 @@
 <div class="row">
-  <mat-spinner *ngIf="!movies"></mat-spinner>
+  <mat-spinner *ngIf="loadingData"></mat-spinner>
+  <div class="col-sm-12" *ngIf="searchTerm && !loadingData">
+    <h3>Show results for: <em>{{searchTerm}}</em></h3>
+  </div>
+  <div class="col-sm-12" *ngIf="!movies && !loadingData">
+    <h1 style="text-align: center">No results found</h1>
+  </div>
   <div class="col-sm-12 col-md-4 col-lg-2 mt-2" *ngFor="let movie of movies">
     <mat-card class="example-card">
       <mat-card-header>
@@ -17,7 +23,7 @@
           <mat-icon inline="true">timelapse</mat-icon> {{movie.runtime}} mins.
         </p>
         <mat-chip-list>
-          <mat-chip *ngFor="let genre of movie.genres">{{genre}}</mat-chip>
+          <mat-chip title="Search by genre" (click)="onGenreClick(genre)" *ngFor="let genre of movie.genres">{{genre}}</mat-chip>
         </mat-chip-list>
       </mat-card-content>
     </mat-card>

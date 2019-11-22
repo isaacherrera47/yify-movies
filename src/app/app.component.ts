@@ -7,7 +7,7 @@ import {MoviesService} from './services/movies.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'yify-movies';
+  title = 'Movies & tv shows';
 
   constructor(private svcMovies: MoviesService) {}
 }
