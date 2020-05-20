@@ -5,8 +5,8 @@ import {HttpClient, HttpParams} from '@angular/common/http';
   providedIn: 'root'
 })
 export class MoviesService {
-  private MOVIES_URL = 'https://yts.lt/api/v2/list_movies.json';
-  private MOVIE_DETAIL_URL = 'https://yts.lt/api/v2/list_movies.json';
+  private MOVIES_URL = 'https://yts.mx/api/v2/list_movies.json';
+  private MOVIE_DETAIL_URL = 'https://yts.mx/api/v2/list_movies.json';
   private SUBS_API = 'https://yukarf10.api.stdlib.com/yify-subs@1.0.0/';
 
   @Output() search: EventEmitter<string> = new EventEmitter();
